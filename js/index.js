@@ -30,6 +30,8 @@
             option.append(routesList[i].name);
             select.append(option);
         }
+        let selectedRoute = select.find(":selected").val();
+        getRouteData(selectedRoute);
     }
 
     function getRouteData(routeName) {
@@ -52,20 +54,16 @@
 
     function displayChart(data) {
         chartData.data.labels = data.years;
-        chartData.data.data = data.crimes;
+        chartData.data.datasets[0].data = data.crimes;
         chartData.options.title.text = data.name + ': Number of Crimes for School Year';
         chart = new Chart(canvasContext, chartData);
-    }
-
-    function submitRoute(event) {
-        let routeName = event.target
     }
 
     const canvasContext = $("#chart").get(0).getContext('2d');
     let chartData = {
         type: 'line',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: [],
             datasets: [{
                 label: '# of Crimes',
                 data: [12, 19, 3, 5, 2, 3],
@@ -115,6 +113,7 @@
     });
 
     getRoutes();
+    
     //let chart = new Chart(canvasContext, chartData);
 })();
     
