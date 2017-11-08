@@ -1,5 +1,6 @@
 (function() {
     const apiUrl = 'http://40.117.190.191:3000/';
+    let chart = null;
 
     function getRoutes() {
         $.ajax({
@@ -38,8 +39,7 @@
             dataType: 'JSON',
             success: (data) => {
                 if (data) {
-                    console.log(data);
-                    // Create the right number of select options based on returned routes
+                    displayChart(data);
                 } else {
                     console.log('No data');
                 }
@@ -48,6 +48,13 @@
                 console.log(error, status, request);
             }
         });
+    }
+
+    function displayChart(data) {
+        chartData.data.labels = data.years;
+        chartData.data.data = data.crimes;
+        chartData.options.title.text = data.name + ': Number of Crimes for School Year';
+        chart = new Chart(canvasContext, chartData);
     }
 
     function submitRoute(event) {
