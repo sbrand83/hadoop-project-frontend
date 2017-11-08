@@ -10,31 +10,26 @@
 <body>
     <h1>Safe Passage Crime Data</h1>
     <h4>Stefan Brand, Benjamin Chang, and Luke Wukusick</h4>
-    <form action="" method="get" class="form-inline">
+    <form action="" method="" class="form-inline">
         <fieldset class="form-group">
             <label for="">Select Route: </label>
-            <select name="" id="" class="form-control">
-                <option value="">Route 1</option>
-                <option value="">Route 2</option>
-                <option value="">Route 3</option>
+            <select name="" id="routeSelect" class="form-control">
             </select>
-            <label for="">Select School Year: </label>
+            <!-- <label for="">Select School Year: </label>
             <select name="" id="" class="form-control">
                 <option value="">2014 - 2015</option>
                 <option value="">2015 - 2016</option>
                 <option value="">2016 - 2017</option>
-            </select>
-            <button type="button" class="btn btn-primary">Submit</button>
+            </select> -->
+            <button id="submitButton" type="button" class="btn btn-primary">Show Data</button>
         </fieldset>
     </form>
-    <div id="data-table"></div>
-    <canvas id="chart" width="400" height="400"></canvas>
+    <div>
+        <canvas id="chart" ></canvas>
+    </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
-    <script>
-        
-        </script>
     <script src="js/index.js" type="text/javascript"></script>
 </body>
 </html>

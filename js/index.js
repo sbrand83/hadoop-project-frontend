@@ -1,16 +1,14 @@
 (function() {
     const apiUrl = 'http://40.117.190.191:3000/';
-    let dataDiv = $('data-table');
-    dataDiv.append($('p'));
 
-    function getData() {
+    function getRoutes() {
         $.ajax({
-            url: apiUrl,
+            url: apiUrl + "routes",
             type: 'GET',
             dataType: 'JSON',
             success: (data) => {
                 if (data) {
-                    // make a table or something with the data, but not sure what the data looks like yet
+                    addRoutes(data);
                 } else {
                     console.log('No data');
                 }
@@ -21,42 +19,95 @@
         });
     }
 
-    const ctx = $("#chart").get(0).getContext('2d');
-    let chart = new Chart(ctx, {
-        type: 'bar',
+    function addRoutes(routes) {
+        let routesList = routes.routes;
+        console.log(routesList);
+        let select = $('#routeSelect');
+        for (let i = 0; i < routesList.length; i++) {
+            let option = $(document.createElement('option'));
+            option.value = routesList[i].name;
+            option.append(routesList[i].name);
+            select.append(option);
+        }
+    }
+
+    function getRouteData(routeName) {
+        $.ajax({
+            url: apiUrl + "routes/" + routeName,
+            type: 'GET',
+            dataType: 'JSON',
+            success: (data) => {
+                if (data) {
+                    console.log(data);
+                    // Create the right number of select options based on returned routes
+                } else {
+                    console.log('No data');
+                }
+            },
+            error: (request, status, error) => {
+                console.log(error, status, request);
+            }
+        });
+    }
+
+    function submitRoute(event) {
+        let routeName = event.target
+    }
+
+    const canvasContext = $("#chart").get(0).getContext('2d');
+    let chartData = {
+        type: 'line',
         data: {
             labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
             datasets: [{
-                label: '# of Votes',
+                label: '# of Crimes',
                 data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255,99,132,1)',
                 borderWidth: 1
             }]
         },
+        height: 400,
+        width: 400,
         options: {
+            title: {
+                display: true,
+                text: 'Number of Crimes for School Year'
+            },
+            
             scales: {
                 yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Number of Crimes'
+                    },
                     ticks: {
                         beginAtZero:true
                     }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'School Year'
+                    },
+                    ticks: {
+                        beginAtZero:false
+                    }
                 }]
-            }
+            },
+            responsive: true,
+
         }
+    };
+
+    let submitButton = $('#submitButton');
+    submitButton.click(function(event) {
+        let select = $("#routeSelect");
+        let selectedRoute = select.find(":selected").val();
+        getRouteData(selectedRoute);
     });
+
+    getRoutes();
+    //let chart = new Chart(canvasContext, chartData);
 })();
     
