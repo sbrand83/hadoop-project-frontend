@@ -52,9 +52,15 @@
     }
 
     function displayChart(data) {
-        chartData.data.labels = data.years;
-        chartData.data.datasets[0].data = data.crimes;
-        chartData.options.title.text = data.name + ': Number of Crimes for School Year';
+        let crimeCounts = [];
+        let schoolYears = [];
+        for (let i = 0; i < data.length; i++) {
+            crimeCounts.push(data[i].crimecount);
+            schoolYears.push(data[i].crimeschoolyear);
+        }
+        chartData.data.labels = schoolYears;
+        chartData.data.datasets[0].data = crimeCounts;
+        chartData.options.title.text = data[0].routename + ': Number of Crimes for School Year';
         chart = new Chart(canvasContext, chartData);
     }
 
