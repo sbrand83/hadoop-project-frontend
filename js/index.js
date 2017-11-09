@@ -1,5 +1,5 @@
 (function() {
-    const apiUrl = 'http://40.117.190.191:3000/';
+    const apiUrl = 'http://104.154.149.157:8888/';
     let chart = null;
 
     function getRoutes() {
@@ -20,14 +20,13 @@
         });
     }
 
-    function addRoutes(routes) {
-        let routesList = routes.routes;
-        console.log(routesList);
+    function addRoutes(routes) {;
+        console.log(routes);
         let select = $('#routeSelect');
-        for (let i = 0; i < routesList.length; i++) {
+        for (let i = 0; i < routes.length; i++) {
             let option = $(document.createElement('option'));
-            option.value = routesList[i].name;
-            option.append(routesList[i].name);
+            option.value = routes[i].routename;
+            option.append(routes[i].routename);
             select.append(option);
         }
         let selectedRoute = select.find(":selected").val();
